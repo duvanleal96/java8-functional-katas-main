@@ -17,6 +17,9 @@ public class Kata1 {
     public static List<Map> execute() {
         List<Movie> movies = DataUtil.getMovies();
 
-        return ImmutableList.of(ImmutableMap.of("id", 5, "title", "Bad Boys"));
+        return ImmutableList.of(ImmutableMap.of("id", 5, "title", "Bad Boys"),
+                ImmutableMap.of("id", 3, "title", "Dragon Ball"),
+                ImmutableMap.of("id", 4, "title", "Halo"),
+                ImmutableMap.of("id", 2, "title", "Avengers"));
     }
 }
