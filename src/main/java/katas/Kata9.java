@@ -10,6 +10,7 @@ import util.DataUtil;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
     Goal: Retrieve each video's id, title, middle interesting moment time, and smallest box art url
@@ -20,6 +21,13 @@ public class Kata9 {
     public static List<Map> execute() {
         List<MovieList> movieLists = DataUtil.getMovieLists();
 
-        return ImmutableList.of(ImmutableMap.of("id", 5, "title", "some title", "time", new Date(), "url", "someUrl"));
+        return movieLists.stream()
+                        .map(movieList -> movieList.getVideos())
+                                .flatMap(movies -> movies.stream())
+                                        .map(datos ->
+                                 ImmutableMap.of("id",datos.getId(), "title", datos.getTitle(), "time", new Date(), "url", datos.getBoxarts().stream()
+                                         .reduce((a,b)->(a.getHeight()* a.getWidth()> b.getHeight()* b.getWidth())? a:b)
+                                         .get().getUrl()))
+                                .collect(Collectors.toList());
     }
 }
