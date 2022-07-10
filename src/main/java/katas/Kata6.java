@@ -15,6 +15,9 @@ public class Kata6 {
         List<Movie> movies = DataUtil.getMovies();
 
         return movies.stream()
-                .map(movie ->movie.getUri())
+                .map(movie ->movie.getBoxarts())
+                .flatMap(boxArts -> boxArts.stream())
+                .reduce((a,b)->(a.getHeight()* a.getWidth()> b.getHeight()* b.getHeight()) ? a:b)
+                .get().getUrl();
     }
 }
